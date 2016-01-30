@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="build/react.js"></script>
+		<script src="build/JSXTransformer.js"></script>
+	</head>
+	<body>
+		<div id="example"></div>
+		<script type="text/jsx">
+		// 组件（component）类名的第一个字母必须大写
+		var HelloMessage = React.createClass({
+			// 所有组件类都必须有自己的 render 方法，用于输出组件
+			render: function() {
+				// 组件只能包含一层顶级标签
+				// this.props 对象可以获取组件类的“固定”属性
+				return <h1>Hello {this.props.name}, className = {this.props.className}, htmlFor = {this.props.htmlFor}</h1>;
+			}
+		});
+		
+		React.render(
+			// 教程指出 class 和 for 属性需要写成 className 和 htmlFor（class 和 for 为 js 的保留字）
+			<HelloMessage name='john' className='test' htmlFor='for' />,
+			document.getElementById('example')
+		)
+		</script>
+	</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="build/react.js"></script>
+		<script src="build/JSXTransformer.js"></script>
+	</head>
+	<body>
+		<script type="text/jsx">
+		// 组件并不是真实的DOM节点，存在内存中的虚拟DOM
+		var MyComponent = React.createClass({
+			handleClick: function() {
+				// ref 可以从组件获取真实的DOM节点
+				React.findDOMNode(this.refs.myTextInput).focus();
+				//this.refs.myTextInput.focus();
+			},
+			render: function() {
+				return (
+					<div>
+						<input type="text" ref="myTextInput" />
+						<input type="button" value="Focus the text input" onClick={this.handleClick} />
+					</div>
+				);
+			}
+		});
+
+		React.render(
+			<MyComponent />,
+			document.body
+		);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCYTPE html>
+<html>
+	<head>
+		<script src="build/react.js"></script>
+		<script src="build/JSXTransformer.js"></script>
+	</head>
+	<body>
+		<div id="test01"></div>
+		<div id="test02"></div>
+		<script type="text/jsx">
+			// list 1
+			var MyTitle = React.createClass({
+				// 组件类的 PropTypes 属性，用来验证组件实例的属性是否符合要求
+				propTypes: {
+					title: React.PropTypes.string.isRequired,
+				},
+				render: function() {
+					return <h1>{this.props.title}</h1>
+				}
+			});
+			
+			var title = 'nihao';
+			
+			React.render(
+				<MyTitle title={title}/>,
+				document.getElementById('test01')
+			);
+			
+			
+			// list 2
+			var DefaultTitle = React.createClass({
+				// getDefaultProps 方法可以用来设置组件属性的默认值
+				getDefaultProps : function() {
+					return {
+						title: 'Hello world!'
+					};
+				},
+				
+				render: function() {
+					return <h1>{this.props.title}</h1>;
+				}
+			});
+			
+			React.render(
+				<DefaultTitle />,
+				document.getElementById('test02')
+			);
+		</script>
+	</body>
+</html>

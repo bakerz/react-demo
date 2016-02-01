@@ -20,6 +20,11 @@
       cursor: default;
       color: #fff;
     }
+    .color-panel {
+      width: 100px;
+      height: 100px;
+      border: 1px solid #ccc;
+    }
     </style>
 	</head>
 	<body>
@@ -50,11 +55,14 @@
           </li>;
         }, this);
 
-        return <div class="my-selector">
+        var colorPanel = <div className="color-panel" style={{backgroundColor: this.state.selected}}></div>;
+
+        return <div className="my-selector">
           <label>{this.props.label}</label>
           <ul>
             {tabs}
           </ul>
+          {colorPanel}
         </div>;
       }
     });

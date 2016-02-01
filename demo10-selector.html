@@ -23,7 +23,7 @@
     </style>
 	</head>
 	<body>
-    <div id="container"></div>
+    <div id="box"></div>
     <script type="text/jsx">
     var data = [
       {name: 'Red', value: 'red'},
@@ -33,23 +33,24 @@
       {name: 'White', value: 'white'}
     ];
 
-    var TabSelector = React.createClass({
+    var MySelector = React.createClass({
       getInitialState: function() {
         return {selected: this.props.selected};
       },
 
-      handleOnClick: function (evt) {
-        this.setState({'selected': evt.target.getAttribute('data-value')})
+      handleClick: function(event) {
+        this.setState({selected: event.target.getAttribute('data-value')});
       },
 
       render: function() {
-        var tabs = this.props.data.map(function (item) {
+        var tabs = this.props.data.map(function(item) {
           var selected = item.value == this.state.selected ? 'selected' : '';
-          return <li data-value={item.value} className={selected} onClick={this.handleOnClick}>
-          {item.name}</li>;
+          return <li data-value={item.value} className={selected} onClick={this.handleClick}>
+          {item.name}
+          </li>;
         }, this);
 
-        return <div className="tab-selector">
+        return <div class="my-selector">
           <label>{this.props.label}</label>
           <ul>
             {tabs}
@@ -59,8 +60,8 @@
     });
 
     React.render(
-      <TabSelector label='Color' data={data} selected={null} />,
-      document.getElementById('container')
+      <MySelector label='Color' data={data} selected={null}/>,
+      document.getElementById('box')
     );
     </script>
 	</body>

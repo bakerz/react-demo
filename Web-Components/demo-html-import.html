@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>HTML Import</title>
+	<link rel="import" href="dialog.html">
+</head>
+<body>
+	<div>网页可以加载外部的样式表、脚本、图片、多媒体，却无法方便地加载其他网页，iframe 和 ajax 都只能提供部分的解决方案，且有很大的局限。HTML Import 就是为了解决加载外部网页这个问题，提出来的。</div>
+	<script>
+	if ('import' in document.createElement('link')) {
+		console.log('support');
+	} else {
+		consoel.log('no-support');
+	}
+	</script>
+</body>
+</html>

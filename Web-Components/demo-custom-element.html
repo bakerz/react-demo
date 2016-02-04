@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Custom Element</title>
+</head>
+<body>
+	<super-button></super-button>
+	<!--<button is="super-button"></button>-->
+	<x-foo></x-foo>
+	<demo-03></demo-03>
+	<script>
+	if('registerElement' in document) {
+		console.log('support');
+	} else {
+		console.log('no-support');
+	}
+
+	var buttonProto = Object.create(HTMLElement.prototype);
+
+	buttonProto.print = function() {
+		console.log('Super Button!');
+	}
+
+	// document.registerElement 登记元素，返回一个自定义元素的构造函数
+	var SuperButton = document.registerElement('super-button', {
+		prototype: buttonProto
+		//, extends: 'button' 
+		// 继承，如果A元素继承了B元素。那么，B元素的is属性，可以指定B元素是A元素的一个实例
+	});
+// 问题：继承怎么使用，并体现，意义何在
+	var superButton = document.querySelector('super-button');
+
+	superButton.print();
+
+	// document.body.appendChild(new SuperButton());
+
+ 
+	// 添加属性和方法
+	// 写法一：
+/*	
+	var XFooProto = Object.create(HTMLElement.prototype);
+	var XFoo = document.registerElement('x-foo', {prototype: XFooProto});
+
+	// 添加属性
+	Object.defineProperty(XFooProto, 'bar', {value: 5});
+
+	// 添加方法
+	XFooProto.foo = function() {
+		console.log('foo() called');
+	};
+*/
+// 问题：添加属性、方法没用实现	
+	// 写法二：
+	var XFoo = document.registerElement('x-foo', {
+		prototype: Object.create(HTMLElement.prototype, {
+			bar: {
+				get: function() {return 5;}
+			},
+			foo: {
+				value: function() {
+					console.log('foo() called');
+				}
+			}
+		})
+	});
+	/*
+		回调函数：
+		createdCallback: 实例生成时触发
+		attachedCallback: 实例插入HTML文档时触发
+		detachedCallback: 实例从HTML文档移除时触发
+		attributeChangeCallback(attrName, oldVal, newVal): 实例的属性发生改变时（添加，移除，更新）触发 
+	 */
+	 
+	// 例子：
+	var proto = Object.create(HTMLElement.prototype);
+
+	proto.createdCallback = function() {
+		console.log('created');
+		this.innerHTML = 'This is a my-demo element';
+	};
+
+	proto.attachedCallback = function() {
+		console.log('attached');
+	}
+
+	var demo_03 = document.registerElement('demo-03', {prototype: proto});
+	</script>
+</body>
+</html>

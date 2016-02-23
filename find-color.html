@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="build/react.js"></script>
+		<script src="build/JSXTransformer.js"></script>
+		<style>
+		#container {
+			width: 500px;
+			height: 500px;
+			background-color: #ccc;
+			margin: 0 auto;
+		}
+		.box {
+			margin: 2px;
+			display: inline-block;
+			background-color: blue;
+			width: -webkit-calc(468px / 8);
+			height: -webkit-calc(468px / 8);
+		}
+		.level2 {
+			width: 286px;
+			height: 286px;
+		}
+		.level3 {
+			width: -webkit-calc(488px / 3);
+			height: -webkit-calc(488px / 3);
+			width: -moz-calc(488px / 3);
+			height: -moz-calc(488px / 3);
+			width: clac(488px / 3);
+			height: clac(488px / 3);
+		}
+		.level4 {
+			width: 121px;
+			height: 121px;
+		}
+		.level5 {
+			width: 96px;
+			height: 96px;
+		}
+		.level6 {
+			width: -webkit-calc(476px / 6);
+			height: -webkit-calc(476px / 6);
+			width: -moz-calc(476px / 6);
+			height: -moz-calc(476px / 6);
+			width: clac(476px / 6);
+			height: clac(476px / 6);
+		}
+		.level7 {
+			width: -webkit-calc(472px / 7);
+			height: -webkit-calc(472px / 7);
+			width: -moz-calc(472px / 7);
+			height: -moz-calc(472px / 7);
+			width: clac(472px / 7);
+			height: clac(472px / 7);
+		}
+		.level8 {
+			width: -webkit-calc(468px / 8);
+			height: -webkit-calc(468px / 8);
+			width: -moz-calc(468px / 8);
+			height: -moz-calc(468px / 8);
+			width: clac(468px / 8);
+			height: clac(468px / 8);
+		}
+		</style>
+	</head>
+	<body>
+		<div id="container"></div>
+		<script type="text/jsx">
+			var levels = [2,3,4,5,6,7,8]; 
+			React.render(
+				<div className="block">
+				{
+					levels.map(function() {
+						return <div className="box"></div>
+					})
+					
+				}
+				</div>,
+				document.getElementById('container')
+			)
+		</script>
+	</body>
+</html>

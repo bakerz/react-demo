@@ -16,6 +16,10 @@
 			background-color: blue;
 			width: -webkit-calc(468px / 8);
 			height: -webkit-calc(468px / 8);
+			border-radius: 5px;
+		}
+		.special {
+			background-color: yellow;
 		}
 		.level2 {
 			width: 286px;
@@ -62,22 +66,74 @@
 			height: clac(468px / 8);
 		}
 		</style>
+		<script>
+			var blocks = [];
+			var level = 8;
+			var special = Math.floor(Math.random()*64);
+
+			var color = {
+				r: Math.floor(Math.random()*256),
+				g: Math.floor(Math.random()*256),
+				b: Math.floor(Math.random()*256)
+			}
+
+			var color_special = {
+				r: Math.floor(color.r*0.9),
+				g: Math.floor(color.g*0.9),
+				b: Math.floor(color.b*0.9)
+			}
+			console.log(special);
+			console.log(color);
+			console.log(color_special);
+
+			//document.querySelector('box').style.backgroundColor = rgb(color.r, color.g, color.b);
+
+			for(var i = 0; i < Math.pow(level, 2); i++) {
+				if(i == special) {
+					blocks.push(1);
+				} else {
+					blocks.push(0);
+				}
+			}
+		</script>
 	</head>
 	<body>
 		<div id="container"></div>
 		<script type="text/jsx">
-			var levels = [2,3,4,5,6,7,8]; 
-			React.render(
-				<div className="block">
-				{
-					levels.map(function() {
-						return <div className="box"></div>
-					})
-					
-				}
-				</div>,
-				document.getElementById('container')
-			)
+		var Block = React.createClass({
+			getInitialState: function() {
+				return {
+					l: 8
+				};
+			},
+
+			getDefaultProps: function() {
+				return {
+					ee: '8'
+				};
+			},
+
+			render: function() {
+				return (
+					<div className="block">
+					{
+						blocks.map(function(block) {
+							if(block == 1) {
+								return <div className="box special">{block}</div>
+							} else {
+								return <div className="box"></div>
+							}
+						})
+					}
+					</div>
+				);
+			}
+		});
+
+		React.render(
+			<Block />,
+			document.getElementById('container')
+		)
 		</script>
 	</body>
 </html>

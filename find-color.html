@@ -9,6 +9,7 @@
 			height: 500px;
 			background-color: #ccc;
 			margin: 0 auto;
+			font-size: 0;
 		}
 		.box {
 			margin: 2px;
@@ -16,7 +17,6 @@
 			background-color: blue;
 			width: -webkit-calc(468px / 8);
 			height: -webkit-calc(468px / 8);
-			border-radius: 5px;
 		}
 		.special {
 			background-color: yellow;
@@ -115,13 +115,13 @@
 
 			render: function() {
 				return (
-					<div className="block">
+					<div>
 					{
 						blocks.map(function(block) {
 							if(block == 1) {
-								return <div className="box special">{block}</div>
+								return <span className="box special"></span>
 							} else {
-								return <div className="box"></div>
+								return <span className="box"></span>
 							}
 						})
 					}

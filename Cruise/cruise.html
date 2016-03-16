@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Cruise</title>
+    <script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="js/react.min.js"></script>
+    <script type="text/javascript" src="js/JSXTransformer.js"></script>
+    <link rel="stylesheet" href="css/index.css" />
+</head>
+<body>
+    <header class="clearfix">
+        <span class="home-title">Cruise</span>
+        <ul>
+            <li>Signed in as <a href="#">Member</a></li>
+            <li><a href="#">Sign out</a></li>
+        </ul>
+    </header>
+    <div class="nav">
+        <ul class="nav-tabs">
+            <li data-id="dashboard">DASHBOARD</li>
+            <li data-id="my-cruise">MY CRUISE</li>
+            <li data-id="agents" class="active">AGENTS</li>
+            <li data-id="help">HELP</li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div class="tab-pane" id="dashboard">
+            <div class="tab-pane-title"></div>
+            <div class="tab-pane-detail"></div>
+        </div>
+        <div class="tab-pane" id="my-cruise">
+            <div class="tab-pane-title"></div>
+            <div class="tab-pane-detail"></div>
+        </div>
+        <div class="tab-pane active" id="agents">
+            <div class="tab-pane-title">
+                <span class="title">Agents</span>
+                <span class="type-btn">All</span>
+                <span class="type-btn active">Physical</span>
+                <span class="type-btn">Virtual</span>
+            </div>
+            <div class="tab-pane-detail">
+                <div id="agents-detail"></div>
+                <div class="log">
+                    <div class="log-title">Summary</div>
+                    <div class="log-item">
+                        <div class="log-item-l">building</div>
+                        <div class="log-item-r">2</div>
+                    </div>
+                    <div class="log-item">
+                        <div class="log-item-l">idle</div>
+                        <div class="log-item-r">2</div>
+                    </div>
+                    <div class="log-title">History</div>
+                    <div class="log-item">bjstdmngbgr02/Acceptance_test</div>
+                    <div class="log-item">bjstdmngbgr02/Acceptance_test</div>
+                    <div class="log-item">bjstdmngbgr02/Acceptance_test</div>
+                    <div class="log-item">bjstdmngbgr02/Acceptance_test</div>
+                    <div class="log-item">bjstdmngbgr02/Acceptance_test</div>
+                    <div class="log-item">bjstdmngbgr02/Acceptance_test</div>
+                    <div class="log-item">bjstdmngbgr02/Acceptance_test</div>
+                    <div class="log-item">bjstdmngbgr02/Acceptance_test</div>
+                    <div class="log-item">bjstdmngbgr02/Acceptance_test</div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="help">
+            <div class="tab-pane-title"></div>
+            <div class="tab-pane-detail"></div>
+        </div>
+    </div>
+    <script type="text/jsx">
+    defaultData = [{
+        'id': 1,
+        'type': 'idle',
+        'name': 'bjstdmngbgr02.thoughtworks.com',
+        'ip': '192.168.1.2',
+        'link': '/var/lib/cruise-agent',
+        'resources': ['ubuntu', 'firefox', 'core-duo']
+    },{
+        'id': 2,
+        'type': 'building',
+        'name': 'bjstdmngbgr03.thoughtworks.com', 
+        'ip': '192.168.1.3',
+        'link': '/var/lib/cruise-agent',
+        'resources': ['ubuntu', 'firefox', 'mysql', 'core-duo']
+    },{
+        'id': 3,
+        'type': 'building',
+        'name': 'bjstdmngbgr04.thoughtworks.com', 
+        'ip': '192.168.1.4',
+        'link': '/var/lib/cruise-agent',
+        'resources': ['firefox3', 'mysql', 'core-duo']
+
+    },{
+        'id': 4,
+        'type': 'idle',
+        'name': 'bjstdmngbgr05.thoughtworks.com', 
+        'ip': '192.168.1.5',
+        'link': '/var/lib/cruise-agent',
+        'resources': []
+    }]
+
+    var ResourcesForm = React.createClass({
+        getInitialState: function() {
+            return ({
+                display: 'none',
+                data: this.props.item
+            });
+        },
+        handlerForm: function() {
+            this.setState({display: 'block'});
+            return;
+        },
+        handlerAdd: function(e) {
+            e.preventDefault();
+            var content = this.refs.content.getDOMNode().value.trim();
+
+            if(!content) {
+                return alert('不要填写空信息！');
+            }
+
+            var arr = content.split(',');
+            var data = this.state.data;
+
+            data.resources = data.resources.concat(arr);
+            this.setState({data: data});
+            this.refs.content.getDOMNode().value = '';
+            this.setState({display: 'none'});
+            return;
+        },
+        handlerDelete: function(e) {
+            var loop = e.target.getAttribute('data-loop');
+            var data = this.state.data;
+
+            data.resources.splice(loop, 1);
+            this.setState({data: data});
+            return;
+        },
+        handlerClose: function() {
+            this.refs.content.getDOMNode().value = '';
+            this.setState({display: 'none'});
+            return;
+        },
+        render: function() {
+            var data = this.state.data;
+            if(data.resources) {
+                var loop = 0;
+                var res_html = data.resources.map(function(r) {
+                    return (
+                        <span>
+                            <span className="resource">{r}</span>
+                            <a className="delete" 
+                            onClick={this.handlerDelete} 
+                            data-id={data.id} data-loop={loop++}>x</a>
+                            &nbsp;
+                        </span>
+                    )
+                }.bind(this));
+            }
+            return (
+                <div className="res-form" >
+                    <div className="control">
+                        + <a href="#" 
+                            onClick={this.handlerForm} 
+                            data-id={data.id}
+                            className="resources-name">
+                            Specify Resources
+                        </a>
+                        <span className="compart">&nbsp;|&nbsp;</span>
+                        Resources: {res_html}
+                    </div>
+                    <div className="form" style={{display: this.state.display}}>
+                        <div className="tri-box">
+                            <div className="tri"></div>
+                        </div>
+                        <div>(separate multiple resources name with commas)</div>
+                        <form>
+                            <input type="text" ref="content"/>
+                            <button onClick={this.handlerAdd}>Add resources</button>
+                            <button onClick={this.handlerClose}>Close</button>
+                        </form>
+                    </div>
+                </div>
+            )
+        }
+    });
+
+    var Items = React.createClass({
+        render: function(){
+            var items = this.props.datas.map(function(item) {
+                return (
+                    <div className={item.type}>
+                        <div className="item-l"></div>
+                        <div className="item-r">
+                            <div className="msg">
+                                <span className="item-name">{item.name}</span>
+                                <span className="compart">&nbsp;|&nbsp;</span>
+                                <span className="item-type">{item.type}</span>
+                                <span className="compart">&nbsp;|&nbsp;</span>
+                                <span className="item-ip">{item.ip}</span>
+                                <span className="compart">&nbsp;|&nbsp;</span>
+                                <span className="item-link">{item.link}</span>
+                            </div>
+                            <ResourcesForm item={item}/>
+                        </div>
+                    </div>
+                )
+            }.bind(this));
+            return (
+                <div className="items">{items}</div>
+            );
+        }
+    });
+
+    React.render(
+        <Items datas={defaultData} />,
+        document.getElementById('agents-detail')
+    );
+    </script>
+</body>
+</html>

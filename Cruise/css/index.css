@@ -76,7 +76,7 @@ header ul li {
 }
 .tab-content .tab-pane .tab-pane-detail {
   border: 2px solid #000;
-  min-height: 470px;
+  height: 500px;
   border-color: transparent #000 #000 #000;
 }
 .tab-content .tab-pane .tab-pane-detail:after {
@@ -87,6 +87,7 @@ header ul li {
 .tab-content .tab-pane .tab-pane-detail .log {
   height: 100%;
   padding: 0 15px;
+  overflow-y: auto;
 }
 .tab-content .tab-pane .tab-pane-detail .log .log-title {
   padding: 20px 0 5px 0;
@@ -108,6 +109,8 @@ header ul li {
 }
 #agents-detail {
   padding: 10px;
+  height: 100%;
+  overflow-y: auto;
 }
 #agents-detail .items > div {
   border: 1px solid #000;
